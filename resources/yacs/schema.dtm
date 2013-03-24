@@ -6,6 +6,7 @@
  :db/valueType :db.type/string
  :db/doc "Origin of the source. Usually the URL."
  :db/cardinality :db.cardinality/one
+ :db/unique :db.unique/value
  :db.install/_attribute :db.part/db
  }
  {
@@ -83,16 +84,7 @@
  :db/valueType :db.type/string
  :db/doc "Department's short code"
  :db/cardinality :db.cardinality/one
- :db/index true
- :db.install/_attribute :db.part/db
- }
- {
- :db/id #db/id[:db.part/db]
- :db/ident :department/courses
- :db/valueType :db.type/ref
- :db/doc "Department's courses"
- :db/cardinality :db.cardinality/one
- :db/index true
+ :db/unique :db.unique/value
  :db.install/_attribute :db.part/db
  }
  {
@@ -117,6 +109,14 @@
  :db/ident :course/name
  :db/valueType :db.type/string
  :db/doc "Human readable name"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/department
+ :db/valueType :db.type/ref
+ :db/doc "Department this course belongs to"
  :db/cardinality :db.cardinality/one
  :db.install/_attribute :db.part/db
  }
