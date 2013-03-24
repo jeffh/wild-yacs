@@ -1,0 +1,301 @@
+[
+ ;; Sources
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :source/ident
+ :db/valueType :db.type/string
+ :db/doc "Origin of the source. Usually the URL."
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :source/created
+ :db/valueType :db.type/instant
+ :db/doc "When the source was first seen and parsed."
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :source/updated
+ :db/valueType :db.type/instant
+ :db/doc "When the source was last parsed."
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :source/visible
+ :db/valueType :db.type/boolean
+ :db/doc "Whether or not this source (and its data) should be visible"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ :db/index true
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :source/merge-order
+ :db/valueType :db.type/long
+ :db/doc "Set the order when this sources data is merged. Higher numbers will overwrite lower ones in a merge"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ ;; Semesters
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :semester/name
+ :db/valueType :db.type/string
+ :db/doc "Human readable semester name"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :semester/start-date
+ :db/valueType :db.type/instant
+ :db/doc "Date the semester begins"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ :db/index true
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :semester/departments
+ :db/valueType :db.type/ref
+ :db/doc "All the departments that this semester has."
+ :db/cardinality :db.cardinality/many
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :semester/courses
+ :db/valueType :db.type/ref
+ :db/doc "All the courses that this semester has."
+ :db/cardinality :db.cardinality/many
+ :db/isComponent true
+ :db.install/_attribute :db.part/db
+ }
+ ;; Departments
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :department/code
+ :db/valueType :db.type/string
+ :db/doc "Department's short code"
+ :db/cardinality :db.cardinality/one
+ :db/index true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :department/courses
+ :db/valueType :db.type/ref
+ :db/doc "Department's courses"
+ :db/cardinality :db.cardinality/one
+ :db/index true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :department/created
+ :db/valueType :db.type/instant
+ :db/doc "Date this department was first seen"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ ;; Course
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/ident
+ :db/valueType :db.type/instant
+ :db/doc "Date this department was first seen"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/name
+ :db/valueType :db.type/string
+ :db/doc "Human readable name"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/number
+ :db/valueType :db.type/string
+ :db/doc "Department course number"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/description
+ :db/valueType :db.type/string
+ :db/doc "About this course"
+ :db/cardinality :db.cardinality/one
+ :db/fulltext true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/min-credits
+ :db/valueType :db.type/long
+ :db/doc "Minimum number of credits this course provides"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/max-credits
+ :db/valueType :db.type/long
+ :db/doc "Maximum number of credits this course provides"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/tags
+ :db/valueType :db.type/ref
+ :db/doc "Various tags that indicate value of a course (eg - comm intensive)"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :course/sections
+ :db/valueType :db.type/ref
+ :db/doc "All the sections that belong to a course"
+ :db/cardinality :db.cardinality/many
+ :db/isComponent true
+ :db.install/_attribute :db.part/db
+ }
+ ;; sections
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/number
+ :db/valueType :db.type/long
+ :db/doc "Section number for this course"
+ :db/cardinality :db.cardinality/one
+ :db/index true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/crn
+ :db/valueType :db.type/long
+ :db/doc "Unique course registration number"
+ :db/cardinality :db.cardinality/one
+ :db/index true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/periods
+ :db/valueType :db.type/ref
+ :db/doc "This periods that this section has"
+ :db/cardinality :db.cardinality/many
+ :db/index true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/seats-taken
+ :db/valueType :db.type/long
+ :db/doc "Number of seats taken for this section"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/seats-total
+ :db/valueType :db.type/long
+ :db/doc "Number of seats total for this section"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/notes
+ :db/valueType :db.type/string
+ :db/doc "Various notes regarding this section"
+ :db/cardinality :db.cardinality/many
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :section/tags
+ :db/valueType :db.type/ref
+ :db/doc "Various tags that indicate special value of this course (eg - study abroad)"
+ :db/cardinality :db.cardinality/many
+ :db.install/_attribute :db.part/db
+ }
+ ;; periods
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :period/days
+ :db/valueType :db.type/ref
+ :db/doc "The days of the week this period occurs in"
+ :db/cardinality :db.cardinality/many
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :period/start
+ :db/valueType :db.type/long
+ :db/doc "The time the period start (in minutes)"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :period/end
+ :db/valueType :db.type/long
+ :db/doc "The time the period end (in minutes)"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :period/location
+ :db/valueType :db.type/ref
+ :db/doc "The location of the period"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :period/instructor
+ :db/valueType :db.type/ref
+ :db/doc "The instructors of the period"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :period/kind
+ :db/valueType :db.type/string
+ :db/doc "The kind of period this is (eg - lab, lecture, etc.)"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+ ;; tags
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :tag/name
+ :db/valueType :db.type/string
+ :db/doc "The name of the tag"
+ :db/unique :db.unique/value
+ :db/cardinality :db.cardinality/one
+ :db/index true
+ :db.install/_attribute :db.part/db
+ }
+ {
+ :db/id #db/id[:db.part/db]
+ :db/ident :tag/created
+ :db/valueType :db.type/instant
+ :db/doc "Date the tag was created"
+ :db/cardinality :db.cardinality/one
+ :db.install/_attribute :db.part/db
+ }
+]
